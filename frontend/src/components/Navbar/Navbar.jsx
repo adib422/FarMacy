@@ -15,13 +15,6 @@ const Navbar = () => {
             <li onClick={()=>setMenu("About us")} className={menu=="About us"?"active":""}>About us</li>
         </ul>
         <div className="navbar-right">
-        <div className="search-bar">
-          <input type="text" placeholder="Search medicines..." />
-          <button className="search-btn">
-            <img src={assets.search_icon} className="icon" alt="Search" />
-          </button>
-        </div>
-
         <div className="navbar-cart-icon">
             <img src={assets.cart_icon} alt="" className="icon"/>
             <div className="dot"></div>

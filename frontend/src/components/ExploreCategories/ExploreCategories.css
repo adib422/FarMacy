@@ -1,0 +1,36 @@
+.explore-categories {
+  text-align: center;
+  padding: 40px 0;
+}
+
+
+.explore-categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 25px;
+}
+
+.explore-categories-list-item {
+  width: 150px;              /* fixed card width */
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.explore-categories-list-item:hover {
+  transform: scale(1.05);
+}
+
+.explore-categories-list-item img {
+  width: 100%;               /* image fits the card */
+  height: 120px;             /* fixed image height */
+  object-fit: cover;         /* crops neatly */
+  border-radius: 12px;       /* rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.explore-categories-list-item .active{
+    border: 4px solid #1E91D6;
+}
