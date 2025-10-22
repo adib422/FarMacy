@@ -11,6 +11,7 @@ import skincare from './skincare.jpg'
 import anti_inflammatory from './anti-inflammatory.jpg'
 import others from './others.jpg'
 
+export const API_URL = 'http://localhost:5000/api'
 
 export const assets = {
     logo,
@@ -31,7 +32,7 @@ export const assets = {
 
 export const categories_list = [
   {
-    category_name: "Pain Relief",
+    category_name: "Pain Relief & Fever",
     category_image: pain_relief,
   },
   {
@@ -43,23 +44,23 @@ export const categories_list = [
     category_image: antibiotics,
   },
   {
-    category_name: "Vitamins",
+    category_name: "Vitamins & Supplements",
     category_image: vitamins,
   },
   {
-    category_name: "Digestive",
+    category_name: "Digestive Health",
     category_image: digestive,
   },
   {
-    category_name: "Skincare",
+    category_name: "Skin Care",
     category_image: skincare,
   },
   {
-    category_name: "Anti-Inflammatory",
+    category_name: "Anti-inflammatory",
     category_image: anti_inflammatory,
   },
   {
-    category_name: "Others",
+    category_name: "Other",
     category_image: others,
   },
 ];

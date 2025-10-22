@@ -2,15 +2,18 @@ import React, { useState } from 'react'
 import './Home.css'
 import Header from '../../components/Header/Header'
 import ExploreCategories from '../../components/ExploreCategories/ExploreCategories'
-const Home = () => {
+import MedicineDisplay from '../../components/MedicineDisplay/MedicineDisplay'  
 
-    const [category,setCategory] = useState("All");
-  return (
-    <div>
-        <Header/>
-        <ExploreCategories category={category} setCategory={setCategory}/>
-    </div>
-  )
+const Home = () => {
+    const [category, setCategory] = useState("All");
+    
+    return (
+        <div>
+            <Header/>
+            <ExploreCategories category={category} setCategory={setCategory}/>
+            <MedicineDisplay category={category} />  
+        </div>
+    )
 }
 
 export default Home
