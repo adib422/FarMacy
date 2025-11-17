@@ -71,7 +71,7 @@ const MedicineDisplay = ({ category }) => {
       setPage(page - 1)
       medicineSectionRef.current?.scrollIntoView({ 
             behavior: 'smooth',
-            block: 'start' // <--- ADD THIS
+            block: 'start' 
         })
     }
   }
@@ -81,7 +81,7 @@ const MedicineDisplay = ({ category }) => {
       setPage(page + 1)
       medicineSectionRef.current?.scrollIntoView({ 
             behavior: 'smooth',
-            block: 'start' // <--- ADD THIS
+            block: 'start' 
         })
     }
   }

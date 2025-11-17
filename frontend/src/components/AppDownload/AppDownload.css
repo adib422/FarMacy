@@ -1,0 +1,70 @@
+.app-download {
+  background: white;
+  padding: 30px 10px;       /* Reduced padding */
+  margin: 30px auto;        /* Smaller margin */
+  max-width: 1000px;
+  text-align: center;
+}
+
+.app-download p {
+  font-size: 28px;
+  color: #222;
+  font-weight: 700;
+  margin-bottom: 20px;      /* Reduced spacing */
+}
+
+/* Icons container */
+.app-download-platforms {
+  display: flex;
+  justify-content: center;
+  gap: 15px;                /* Smaller spacing between icons */
+  flex-wrap: wrap;
+}
+
+/* Icon sizes increased */
+.app-download-platforms img {
+  height: 60px;             /* Larger height */
+  width: 180px;             /* Larger width (keeps all icons same size) */
+  object-fit: fill;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.app-download-platforms img:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-download {
+    padding: 20px 10px;
+    margin: 20px auto;
+  }
+
+  .app-download p {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .app-download-platforms img {
+    height: 60px;
+    width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-download p {
+    font-size: 18px;
+  }
+
+  .app-download-platforms {
+    gap: 10px;
+  }
+
+  .app-download-platforms img {
+    height: 55px;
+    width: 170px;
+  }
+}

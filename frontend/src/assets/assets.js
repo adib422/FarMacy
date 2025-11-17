@@ -10,6 +10,12 @@ import digestive from './digestive.jpg'
 import skincare from './skincare.jpg'
 import anti_inflammatory from './anti-inflammatory.jpg'
 import others from './others.jpg'
+import facebook_icon from './facebook.png' 
+import twitter_icon from './twitter.png'
+import instagram_icon from './instagram.png'
+import linkedin_icon from './linkedin.png'
+import play_store from './playstore.png'
+import app_store from './appstore.png'
 
 export const API_URL = 'http://localhost:5000/api'
 
@@ -18,6 +24,14 @@ export const assets = {
     cart_icon,
     search_icon,
     header_image,
+    facebook_icon,
+    twitter_icon,
+    instagram_icon,
+    linkedin_icon,
+    play_store,    
+    app_store,
+
+
     categories: {
         pain_relief,
         cold_cough,
