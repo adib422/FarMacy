@@ -85,7 +85,9 @@
   background: transparent;
 }
 
-
+.search-bar input::placeholder {
+  color: #aaa;
+}
 
 .search-bar .search-btn {
   background: none;
