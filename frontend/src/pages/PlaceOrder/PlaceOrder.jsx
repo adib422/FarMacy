@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './PlaceOrder.css';
 import { useCart } from '../../context/CartContext';
+import { useUser } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { getUserAddresses } from '../../services/addressApi';
+import { createOrder } from '../../services/orderApi';
 
 const PlaceOrder = () => {
   const { cartItems, getTotalItems, clearCart } = useCart();
+  const { user, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   // Form states
@@ -12,6 +16,7 @@ const PlaceOrder = () => {
   const [savedAddresses, setSavedAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [saveNewAddress, setSaveNewAddress] = useState(false);
 
   // New address form
   const [formData, setFormData] = useState({
@@ -31,44 +36,46 @@ const PlaceOrder = () => {
   const deliveryFee = subtotal > 500 ? 0 : 40;
   const total = subtotal + deliveryFee;
 
-  // Fetch saved addresses (you'll need to implement this API)
+  // Check authentication
   useEffect(() => {
-    fetchSavedAddresses();
-  }, []);
+    if (!isAuthenticated) {
+      alert('Please login to place an order');
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Fetch saved addresses
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchSavedAddresses();
+    }
+  }, [isAuthenticated]);
 
   const fetchSavedAddresses = async () => {
     try {
-      // TODO: Replace with your actual API call
-      // const response = await fetch('http://localhost:5000/api/addresses');
-      // const data = await response.json();
-      // setSavedAddresses(data.addresses);
+      const result = await getUserAddresses();
+      if (result.success) {
+        const formattedAddresses = result.addresses.map(addr => ({
+          id: addr.id,
+          firstName: addr.first_name,
+          lastName: addr.last_name,
+          phone: addr.phone,
+          street: addr.street,
+          city: addr.city,
+          state: addr.state,
+          zipCode: addr.zip_code,
+          country: addr.country,
+          isDefault: addr.is_default
+        }));
+        setSavedAddresses(formattedAddresses);
 
-      // For now, using dummy data
-      const dummyAddresses = [
-        {
-          id: 1,
-          firstName: 'Adib',
-          lastName: 'Ali',
-          phone: '+91 9876543210',
-          street: '123 Main Street',
-          city: 'New Delhi',
-          state: 'Delhi',
-          zipCode: '110001',
-          country: 'India'
-        },
-        {
-          id: 2,
-          firstName: 'Adib',
-          lastName: 'Ali',
-          phone: '+91 9876543210',
-          street: '456 Park Avenue',
-          city: 'Mumbai',
-          state: 'Maharashtra',
-          zipCode: '400001',
-          country: 'India'
+        // Auto-select default address
+        const defaultAddr = formattedAddresses.find(addr => addr.isDefault === 1);
+        if (defaultAddr) {
+          setUseExistingAddress(true);
+          handleAddressSelect(defaultAddr.id);
         }
-      ];
-      setSavedAddresses(dummyAddresses);
+      }
     } catch (error) {
       console.error('Error fetching addresses:', error);
     }
@@ -88,7 +95,7 @@ const PlaceOrder = () => {
       setFormData({
         firstName: address.firstName,
         lastName: address.lastName,
-        email: address.email || '',
+        email: user?.email || '',
         phone: address.phone,
         street: address.street,
         city: address.city,
@@ -107,42 +114,41 @@ const PlaceOrder = () => {
       return;
     }
 
+    // Validation
+    if (!formData.firstName || !formData.lastName || !formData.phone || !formData.street || !formData.city || !formData.state || !formData.zipCode) {
+      alert('Please fill all address fields');
+      return;
+    }
+
     setLoading(true);
 
     // Prepare order data
     const orderData = {
       items: cartItems,
-      address: formData,
+      addressId: selectedAddressId || null,
       subtotal,
       deliveryFee,
+      discount: 0,
       total,
-      paymentMethod: 'COD' // You can add payment options later
+      paymentMethod: 'COD'
     };
 
     try {
-      // TODO: Send order to backend
-      // const response = await fetch('http://localhost:5000/api/orders', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(orderData)
-      // });
-      // const data = await response.json();
+      const result = await createOrder(orderData);
 
-      console.log('Order placed:', orderData);
-
-      // Simulate API delay
-      setTimeout(() => {
-        alert('Order placed successfully! 🎉');
+      if (result.success) {
+        alert('Order placed successfully! 🎉\nOrder ID: #' + result.orderId);
         clearCart();
-        navigate('/');
-        setLoading(false);
-      }, 1500);
-
+        navigate('/dashboard?tab=orders');
+      } else {
+        alert(result.message || 'Failed to place order. Please try again.');
+      }
     } catch (error) {
       console.error('Error placing order:', error);
       alert('Failed to place order. Please try again.');
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   if (cartItems.length === 0) {
@@ -179,7 +185,7 @@ const PlaceOrder = () => {
                       setFormData({
                         firstName: '',
                         lastName: '',
-                        email: '',
+                        email: user?.email || '',
                         phone: '',
                         street: '',
                         city: '',
@@ -218,6 +224,16 @@ const PlaceOrder = () => {
                 ))}
               </div>
             )}
+
+            <div className="add-new-address-link">
+              <button 
+                type="button"
+                onClick={() => navigate('/dashboard?tab=addresses')}
+                className="manage-addresses-btn"
+              >
+                + Add New Address
+              </button>
+            </div>
           </div>
         )}
 
@@ -248,7 +264,7 @@ const PlaceOrder = () => {
             type="email"
             name="email"
             placeholder="Email address"
-            value={formData.email}
+            value={formData.email || user?.email}
             onChange={handleChange}
             required
             disabled={useExistingAddress && selectedAddressId}
@@ -329,15 +345,41 @@ const PlaceOrder = () => {
               <p>Delivery Fee</p>
               <p>{deliveryFee === 0 ? 'FREE' : `₹${deliveryFee}`}</p>
             </div>
+            {deliveryFee > 0 && subtotal < 500 && (
+              <p className="free-delivery-info">
+                Add ₹{(500 - subtotal).toFixed(2)} more for FREE delivery
+              </p>
+            )}
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
               <b>₹{total.toFixed(2)}</b>
             </div>
           </div>
+
+          <div className="order-summary">
+            <h3>Order Items:</h3>
+            <div className="order-items-preview">
+              {cartItems.slice(0, 3).map((item) => (
+                <div key={item.id} className="order-item-preview">
+                  <span>{item.medicine_name}</span>
+                  <span>x{item.quantity}</span>
+                </div>
+              ))}
+              {cartItems.length > 3 && (
+                <p className="more-items">+{cartItems.length - 3} more items</p>
+              )}
+            </div>
+          </div>
+
           <button onClick={handleSubmit} disabled={loading}>
             {loading ? 'Placing Order...' : 'PLACE ORDER'}
           </button>
+
+          <div className="payment-info">
+            <p>💵 Payment Method: Cash on Delivery (COD)</p>
+            <p>📦 Delivery in 30-45 minutes</p>
+          </div>
         </div>
       </div>
     </div>

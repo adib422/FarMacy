@@ -8,6 +8,7 @@ import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import { CartProvider } from './context/CartContext'
 import { UserProvider } from './context/UserContext'
 import Footer from './components/Footer/Footer'
+import UserDashboard from './pages/UserDashboard/UserDashboard'
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/order' element={<PlaceOrder />} />
+            <Route path='/dashboard' element={<UserDashboard />} />
           </Routes>
           <Footer />
         </div>

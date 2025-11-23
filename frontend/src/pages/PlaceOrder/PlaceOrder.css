@@ -246,6 +246,84 @@
   transform: translateY(-2px);
 }
 
+.manage-addresses-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: white;
+  color: #1E91D6;
+  border: 2px dashed #1E91D6;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.manage-addresses-btn:hover {
+  background: #e3f2fd;
+}
+
+.order-summary {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.order-summary h3 {
+  font-size: 16px;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.order-items-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-item-preview {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #555;
+}
+
+.more-items {
+  font-size: 13px;
+  color: #7f8c8d;
+  margin-top: 5px;
+}
+
+.payment-info {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e8f5e9;
+  border-radius: 8px;
+  border-left: 4px solid #27ae60;
+}
+
+.payment-info p {
+  margin: 5px 0;
+  font-size: 13px;
+  color: #2c3e50;
+}
+
+.free-delivery-info {
+  font-size: 13px;
+  color: #27ae60;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.cart-total button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
 /* Responsive */
 @media (max-width: 1024px) {
   .place-order {

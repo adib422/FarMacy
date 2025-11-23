@@ -1,0 +1,135 @@
+.user-dashboard {
+  max-width: 1400px;
+  margin: 100px auto 50px;
+  padding: 0 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.dashboard-header p {
+  font-size: 16px;
+  color: #7f8c8d;
+}
+
+.dashboard-container {
+  display: flex;
+  gap: 30px;
+}
+
+.dashboard-sidebar {
+  width: 280px;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.sidebar-item:hover {
+  background: #f8f9fa;
+  color: #1E91D6;
+}
+
+.sidebar-item.active {
+  background: linear-gradient(135deg, #1E91D6, #1576b3);
+  color: white;
+}
+
+.sidebar-item .icon {
+  font-size: 20px;
+}
+
+.dashboard-content {
+  flex: 1;
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  min-height: 500px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    padding: 15px;
+  }
+
+  .sidebar-item {
+    white-space: nowrap;
+    margin-bottom: 0;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-dashboard {
+    margin-top: 60px;
+    padding: 0 15px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 26px;
+  }
+
+  .dashboard-content {
+    padding: 20px;
+  }
+
+  .sidebar-item {
+    font-size: 14px;
+    padding: 12px 15px;
+  }
+
+  .sidebar-item .icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 22px;
+  }
+
+  .dashboard-sidebar {
+    padding: 10px;
+  }
+
+  .sidebar-item span:not(.icon) {
+    display: none;
+  }
+
+  .sidebar-item {
+    padding: 12px;
+  }
+}
